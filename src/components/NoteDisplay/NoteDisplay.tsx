@@ -49,7 +49,7 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
         </View>
       </View>
 
-      <Typography typography="H6RegularDarkGrey">{note.body}</Typography>
+      <Typography typography="H6RegularDarkGrey">{task.title}</Typography>
     </TouchableOpacity>
   );
 };

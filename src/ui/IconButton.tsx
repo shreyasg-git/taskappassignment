@@ -3,11 +3,11 @@ import {GestureResponderEvent, TouchableOpacity} from 'react-native';
 import {NumberProp} from 'react-native-svg';
 
 import {Colors} from '../consts';
-import {IconType} from '../../assets/icons';
-import Icon from './Icon';
+// import {IconType} from '../../assets/icons';
+// import Icon from './Icon';
 
 interface TProps {
-  icon: IconType;
+  // icon: IconType;
   iconSize?: NumberProp;
   backgroundColor?: string;
   iconColor?: string;
@@ -19,7 +19,7 @@ interface TProps {
 }
 
 const IconButton: React.FC<TProps> = ({
-  icon,
+  // icon,
   iconColor,
   backgroundColor,
   roundness = 20,
@@ -40,7 +40,7 @@ const IconButton: React.FC<TProps> = ({
         padding,
       }}
       disabled={disabled}>
-      <Icon name={icon} color={iconColor} size={iconSize} />
+      {/* <Icon name={icon} color={iconColor} size={iconSize} /> */}
     </TouchableOpacity>
   );
 };

@@ -6,7 +6,7 @@ import {Colors} from '../consts';
 import {RealmContext, Task} from '../realm';
 import Typography from '../ui/typography/Typography';
 import {NoteDisplay} from '../components/NoteDisplay';
-import Icon from '../ui/Icon';
+// import Icon from '../ui/Icon';
 import FAB from '../components/FAB';
 // import {useNavigation} from '@react-navigation/native';
 const {useRealm, useQuery} = RealmContext;
@@ -25,6 +25,7 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
         _id: new Realm.BSON.ObjectId(),
         title: `First Task ${Math.floor(Math.random() * 100 + 1)}`,
         description: '1st Task Body',
+        due_date: new Date(),
       });
     });
   };
