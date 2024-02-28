@@ -1,3 +1,4 @@
+import CheckBox from '@react-native-community/checkbox';
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {Colors, DateFormats} from '../../consts';
@@ -49,7 +50,14 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
         </View>
       </View>
 
-      <Typography typography="H6RegularDarkGrey">{task.title}</Typography>
+      <Typography typography="H6RegularDarkGrey">{task.description}</Typography>
+
+      <CheckBox
+        disabled={false}
+        value={false}
+        onValueChange={newValue => console.log('NO OP')}
+        lineWidth={1}
+      />
     </TouchableOpacity>
   );
 };
