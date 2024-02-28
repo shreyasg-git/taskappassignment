@@ -22,47 +22,54 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
         navigate('EditTask', {taskId: task._id});
       }}
       style={{
-        // flex: 0.5,
         display: 'flex',
         borderWidth: 1,
         borderColor: Colors.grey,
         borderStyle: 'solid',
+        justifyContent: 'space-between',
         margin: 5,
         borderRadius: 5,
         padding: 5,
+        flexDirection: 'row',
       }}>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        {task.title ? (
-          <Typography typography="H5Bold">{task.title}</Typography>
-        ) : null}
+      <View style={{flexDirection: 'row'}}>
         <View>
-          <Typography typography="H7RegularDarkGrey">
-            {/* Created - */}
-            {moment(task.due_date).format(
-              DateFormats.DayMonthYearNoDashes,
-            )}, {moment(task.due_date).fromNow()}
+          <CheckBox
+            disabled={false}
+            value={isCompleted}
+            onValueChange={newValue => setIsCompleted(!isCompleted)}
+            lineWidth={1}
+          />
+        </View>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            justifyContent: 'space-between',
+          }}>
+          {task.title ? (
+            <Typography typography="H5Bold" textAlign="left">
+              {task.title}
+            </Typography>
+          ) : null}
+
+          <Typography typography="H6RegularDarkGrey">
+            {task.description}
           </Typography>
-          <Typography typography="H7RegularDarkGrey">
-            {/* Updated -{moment(note.updatedAt).fromNow()} */}
-          </Typography>
-          <DatePicker />
         </View>
       </View>
-
-      <Typography typography="H6RegularDarkGrey">{task.description}</Typography>
-
-      <CheckBox
-        disabled={false}
-        value={isCompleted}
-        onValueChange={newValue => setIsCompleted(!isCompleted)}
-        lineWidth={1}
-      />
+      <View>
+        <View>
+          <Typography typography="H7RegularDarkGrey">
+            {moment(task.due_date).calendar()}
+            {/* {moment(task.due_date).format(DateFormats.DayMonthYearNoDashes)},{' '} */}
+          </Typography>
+          <Typography typography="H7RegularDarkGrey">
+            {moment(task.due_date).fromNow()}
+          </Typography>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 };

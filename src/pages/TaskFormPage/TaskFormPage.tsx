@@ -8,6 +8,7 @@ import {Colors} from '../../consts';
 import IconButton from '../../ui/IconButton';
 import Padding from '../../ui/Padding';
 import {RealmContext, Task} from '../../realm';
+import {DatePicker} from '../../components/DatePicker';
 export const FormModes = {CREATE: 'CREATE', EDIT: 'EDIT'};
 
 const {useRealm, useObject} = RealmContext;
@@ -29,6 +30,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
 
   const [title, setTitle] = useState(task?.title || '');
   const [description, setDesc] = useState(task?.description || '');
+  const [dueDate, setDueDate] = useState(new Date());
 
   const [height, setHeight] = useState<number>(0);
 
@@ -46,6 +48,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
           _id: new Realm.BSON.ObjectId(),
           description,
           title,
+          due_date: dueDate,
         });
       });
     } catch (error) {
@@ -104,6 +107,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
           onBackPress();
         }}
       />
+      <DatePicker />
       <Padding height={20} />
 
       <Input
@@ -114,9 +118,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
           padding: 0,
           verticalAlign: 'middle',
           backgroundColor: Colors.background,
-
           borderRadius: 0,
-          //   fontFamily: typographyFamilies.poppinsRegular,
           fontSize: 28,
         }}
         selectionColor={Colors.dark}
@@ -130,25 +132,12 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
       <Input
         placeholder="Click To Type..."
         verticalAlign="middle"
-        // textAlign="center"
         textAlignVertical="top"
         style={{
-          //   flex: 1,
           height,
-          //   alignItems: 'center',
-          //   justifyContent: 'center',
           alignSelf: 'flex-start',
           backgroundColor: Colors.background,
-          //   height: '100%',
           width: '100%',
-          //   //   height: 500,
-          //   //   flex: 1,
-          //   padding: 0,
-          //   verticalAlign: 'top',
-          //   backgroundColor: Colors.aliceBlue,
-          //   borderRadius: 0,
-          //   //   fontFamily: typographyFamilies.poppinsRegular,
-          //   fontSize: 18,
         }}
         selectionColor={Colors.darkGrey}
         placeholderTextColor={Colors.darkGrey}

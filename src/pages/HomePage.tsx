@@ -6,9 +6,9 @@ import {Colors} from '../consts';
 import {RealmContext, Task} from '../realm';
 import Typography from '../ui/typography/Typography';
 import {TaskDisplay} from '../components/TaskDisplay';
-// import Icon from '../ui/Icon';
 import FAB from '../components/FAB';
 import {useNavigation} from '@react-navigation/native';
+
 const {useRealm, useQuery} = RealmContext;
 
 type HomePageProps = {};
@@ -50,11 +50,11 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
         }}
       />
 
-      {/* <Icon name="plus" size={50} color={Colors.primaryYellow} /> */}
       <FAB
         iconName="plus"
         onPress={() => {
           console.log('AAAAAAAAAAAAAA NO:OP');
+          // @ts-ignore
           navigate('CreateTask', {});
         }}
       />
