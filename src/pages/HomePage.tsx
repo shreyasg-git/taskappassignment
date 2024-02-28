@@ -8,14 +8,14 @@ import Typography from '../ui/typography/Typography';
 import {NoteDisplay} from '../components/NoteDisplay';
 // import Icon from '../ui/Icon';
 import FAB from '../components/FAB';
-// import {useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 const {useRealm, useQuery} = RealmContext;
 
 type HomePageProps = {};
 
 const HomePage: React.FC<HomePageProps> = ({}) => {
   // const [allNotes, setAllNotes] = useState<Realm.Results<Note>>();
-  //   const {navigate} = useNavigation();
+  const {navigate} = useNavigation();
   const tasks = useQuery(Task);
   const realm = useRealm();
 
@@ -56,7 +56,7 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
         iconName="plus"
         onPress={() => {
           console.log('AAAAAAAAAAAAAA NO:OP');
-          //   navigate('CreateNote', {});
+          navigate('CreateNote', {});
         }}
       />
     </View>

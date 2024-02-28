@@ -1,5 +1,5 @@
 import CheckBox from '@react-native-community/checkbox';
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {Colors, DateFormats} from '../../consts';
 import {Task} from '../../realm';
@@ -10,6 +10,10 @@ type TaskDisplayProps = {task: Task};
 
 const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
   // const {navigate} = useNavigation();
+
+  const onCheckBoxClick = () => {};
+  const [isCompleted, setIsCompleted] = useState(false);
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -54,8 +58,8 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
 
       <CheckBox
         disabled={false}
-        value={false}
-        onValueChange={newValue => console.log('NO OP')}
+        value={isCompleted}
+        onValueChange={newValue => setIsCompleted(!isCompleted)}
         lineWidth={1}
       />
     </TouchableOpacity>

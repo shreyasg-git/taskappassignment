@@ -1,5 +1,5 @@
 import React from 'react';
-import {GestureResponderEvent, TouchableOpacity} from 'react-native';
+import {GestureResponderEvent, TouchableOpacity, Text} from 'react-native';
 import {NumberProp} from 'react-native-svg';
 
 import {Colors} from '../consts';
@@ -40,6 +40,7 @@ const IconButton: React.FC<TProps> = ({
         padding,
       }}
       disabled={disabled}>
+      <Text>Hii</Text>
       {/* <Icon name={icon} color={iconColor} size={iconSize} /> */}
     </TouchableOpacity>
   );
