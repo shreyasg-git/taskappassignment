@@ -5,11 +5,13 @@ import {Colors, DateFormats} from '../../consts';
 import {Task} from '../../realm';
 import Typography from '../../ui/typography/Typography';
 import moment from 'moment';
-// import {useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import DatePicker from '../DatePicker/DatePicker';
+
 type TaskDisplayProps = {task: Task};
 
 const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
-  // const {navigate} = useNavigation();
+  const {navigate} = useNavigation();
 
   const onCheckBoxClick = () => {};
   const [isCompleted, setIsCompleted] = useState(false);
@@ -17,9 +19,7 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        // navigate('Edittask', {taskId: task._id});
-
-        console.log('AAAAAAAAAAAAAA NO OP');
+        navigate('EditTask', {taskId: task._id});
       }}
       style={{
         // flex: 0.5,
@@ -51,6 +51,7 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
           <Typography typography="H7RegularDarkGrey">
             {/* Updated -{moment(note.updatedAt).fromNow()} */}
           </Typography>
+          <DatePicker />
         </View>
       </View>
 

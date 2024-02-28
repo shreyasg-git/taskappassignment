@@ -5,7 +5,7 @@ import {FlatList, TouchableOpacity, View} from 'react-native';
 import {Colors} from '../consts';
 import {RealmContext, Task} from '../realm';
 import Typography from '../ui/typography/Typography';
-import {NoteDisplay} from '../components/NoteDisplay';
+import {TaskDisplay} from '../components/TaskDisplay';
 // import Icon from '../ui/Icon';
 import FAB from '../components/FAB';
 import {useNavigation} from '@react-navigation/native';
@@ -14,7 +14,6 @@ const {useRealm, useQuery} = RealmContext;
 type HomePageProps = {};
 
 const HomePage: React.FC<HomePageProps> = ({}) => {
-  // const [allNotes, setAllNotes] = useState<Realm.Results<Note>>();
   const {navigate} = useNavigation();
   const tasks = useQuery(Task);
   const realm = useRealm();
@@ -37,14 +36,14 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
           Total Tasks : {tasks?.length}
         </Typography>
         <TouchableOpacity onPress={createTask}>
-          <Typography typography="H5SemiBoldDarkGrey">CREATE NOTE</Typography>
+          <Typography typography="H5SemiBoldDarkGrey">CREATE Task</Typography>
         </TouchableOpacity>
       </View>
 
       <FlatList
         data={tasks}
         renderItem={props => {
-          return <NoteDisplay task={props.item} />;
+          return <TaskDisplay task={props.item} />;
         }}
         keyExtractor={props => {
           return props._id.toString();
@@ -56,7 +55,7 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
         iconName="plus"
         onPress={() => {
           console.log('AAAAAAAAAAAAAA NO:OP');
-          navigate('CreateNote', {});
+          navigate('CreateTask', {});
         }}
       />
     </View>

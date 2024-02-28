@@ -11,9 +11,9 @@ import {RealmContext, Task} from '../../realm';
 export const FormModes = {CREATE: 'CREATE', EDIT: 'EDIT'};
 
 const {useRealm, useObject} = RealmContext;
-type NoteFormPageProps = {};
+type TaskFormPageProps = {};
 
-const TaskFormPage: React.FC<NoteFormPageProps> = ({}) => {
+const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
   const {goBack} = useNavigation();
   const {params, name} = useRoute();
 
@@ -33,13 +33,13 @@ const TaskFormPage: React.FC<NoteFormPageProps> = ({}) => {
   const [height, setHeight] = useState<number>(0);
 
   const formMode = useMemo(() => {
-    if (name === 'EditNote') {
+    if (name === 'EditTask') {
       return FormModes.EDIT;
     }
     return FormModes.CREATE;
   }, [name]);
 
-  const createNote = () => {
+  const createTask = () => {
     try {
       realm.write(() => {
         realm.create('Task', {
@@ -49,18 +49,18 @@ const TaskFormPage: React.FC<NoteFormPageProps> = ({}) => {
         });
       });
     } catch (error) {
-      console.log('ERROR IN CREAT NOTE', error);
+      console.log('ERROR IN CREAT Task', error);
     }
   };
 
-  const editNote = () => {
+  const editTask = () => {
     realm.write(() => {
       if (task) {
-        console.log('IPDATEING :: ', description, title);
+        console.log('TaskForm:editTask :: ', description, title);
 
-        task.body = description as 'string';
+        task.description = description as 'string';
         task.title = title as 'string';
-        task.updatedAt = new Date().toISOString() as 'date';
+        // task.updatedAt = new Date().toISOString() as 'date';
       }
     });
   };
@@ -68,10 +68,10 @@ const TaskFormPage: React.FC<NoteFormPageProps> = ({}) => {
     if (description?.length && title?.length) {
       switch (formMode) {
         case FormModes.CREATE:
-          createNote();
+          createTask();
           return;
         case FormModes.EDIT:
-          editNote();
+          editTask();
           return;
       }
     }

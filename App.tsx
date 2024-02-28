@@ -2,7 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {HomePage} from './src/pages';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NoteFormPage} from './src/pages/NoteFormPage';
+import {TaskFormPage} from './src/pages/TaskFormPage';
 import {RealmContext} from './src/realm';
 
 const {RealmProvider} = RealmContext;
@@ -17,16 +17,16 @@ function App(): JSX.Element {
           <Stack.Screen
             name="Home"
             component={HomePage}
-            options={{title: 'BetterKeep'}}
+            options={{title: 'Tasks'}}
           />
           <Stack.Screen
-            name="CreateNote"
-            component={NoteFormPage}
+            name="CreateTask"
+            component={TaskFormPage}
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="EditNote"
-            component={NoteFormPage}
+            name="EditTask"
+            component={TaskFormPage}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
