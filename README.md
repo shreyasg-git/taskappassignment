@@ -9,4 +9,4 @@
 Note - App does not use Expo.
 
 
-###### Handy Link to see native implementation of Notifications -[click](https://github.com/shreyasg-git/taskappassignment/tree/main/android/app/src/main/java/com/tasksapp)
+###### Handy Link to see native implementation of Notifications - [click here](https://github.com/shreyasg-git/taskappassignment/tree/main/android/app/src/main/java/com/tasksapp)
