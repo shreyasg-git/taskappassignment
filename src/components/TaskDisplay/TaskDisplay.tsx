@@ -47,7 +47,8 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
       style={{
         display: 'flex',
         borderWidth: 1,
-        borderColor: Colors.grey,
+        borderColor: Colors.secondaryYellow,
+        backgroundColor: Colors.secondaryYellow,
         borderStyle: 'solid',
         justifyContent: 'space-between',
         // flexWrap: 'wrap',

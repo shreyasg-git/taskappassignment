@@ -12,7 +12,6 @@ import {DatePicker} from '../../components/DatePicker';
 import {Typography} from '../../ui';
 import moment, {calendarFormat} from 'moment';
 export const FormModes = {CREATE: 'CREATE', EDIT: 'EDIT'};
-import DropDown from '../../components/Dropdown';
 
 const {useRealm, useObject} = RealmContext;
 type TaskFormPageProps = {};
@@ -39,7 +38,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
 
   const [title, setTitle] = useState(task?.title || '');
   const [description, setDesc] = useState(task?.description || '');
-  const [softDate, setSoftDate] = useState(new Date());
+  const [softDate, setSoftDate] = useState(task?.due_date || new Date());
   const [height, setHeight] = useState<number>(0);
 
   const setDueDate = (date: any) => {
@@ -88,7 +87,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
       }
     });
   };
-  const onBackPress = () => {
+  const saveProgress = () => {
     if (description?.length && title?.length) {
       switch (formMode) {
         case FormModes.CREATE:
@@ -103,7 +102,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
-      onBackPress,
+      saveProgress,
     );
 
     return () => backHandler.remove();
@@ -126,7 +125,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
         iconColor="#000"
         onPress={() => {
           goBack();
-          onBackPress();
+          saveProgress();
         }}
       />
       <View
@@ -198,7 +197,14 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
           right: 0,
           // height: 60,
         }}>
-        <Button title="Save" color={Colors.darkNavyBlue} />
+        <Button
+          title="Save"
+          color={Colors.darkNavyBlue}
+          onPress={() => {
+            saveProgress();
+            goBack();
+          }}
+        />
       </View>
     </View>
   );
