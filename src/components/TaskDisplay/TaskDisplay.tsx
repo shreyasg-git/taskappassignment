@@ -8,6 +8,7 @@ import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
 import IconButton from '../../ui/IconButton';
 import Padding from '../../ui/Padding';
+import Icon from '../../ui/Icon';
 
 const {useObject, useRealm} = RealmContext;
 
@@ -103,7 +104,7 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
         </View>
       </View>
       <View style={{padding: 1}}>
-        <View style={{flex: 1, overflow: 'visible'}}>
+        <View style={{flex: 1}}>
           <Typography typography="H7RegularDarkGrey">
             {moment(task.due_date).calendar()}
           </Typography>
@@ -111,6 +112,11 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
             {moment(task.due_date).fromNow()}
           </Typography>
         </View>
+        {task.remind_me ? (
+          <View style={{alignItems: 'flex-end'}}>
+            <Icon name="Bell" color={Colors.darkGrey} size={20} />
+          </View>
+        ) : null}
       </View>
     </TouchableOpacity>
   );

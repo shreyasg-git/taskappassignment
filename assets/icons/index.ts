@@ -16,7 +16,8 @@ export type IconType =
   | 'plus-ring'
   | 'plus'
   | 'x-circle'
-  | 'x';
+  | 'x'
+  | 'Bell';
 export const findIconByName = (
   name: string,
 ): React.ComponentType<Svg.SvgProps> => {
@@ -53,6 +54,9 @@ export const findIconByName = (
 
     case 'x':
       return require('./X').default;
+
+    case 'Bell':
+      return require('./Bell').default;
 
     default:
       return require('./QuestionMark').default;
