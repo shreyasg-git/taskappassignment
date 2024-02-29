@@ -110,7 +110,6 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
             </Typography>
           ) : null}
           <Padding height={15} />
-
           <Typography
             typography="H5RegularDarkGrey"
             numberOfLines={1}
@@ -122,10 +121,10 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
       <View style={{padding: 1}}>
         <View style={{flex: 1}}>
           <Typography typography="H7Bold">
-            {moment(task.due_date).calendar()}
+            {moment(_task?.due_date).calendar()}
           </Typography>
           <Typography typography="H7RegularDarkGrey" textAlign="right">
-            {moment(task.due_date).fromNow()}
+            {moment(_task?.due_date).fromNow()}
           </Typography>
         </View>
         {task.remind_me ? (

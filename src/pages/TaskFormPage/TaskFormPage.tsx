@@ -6,11 +6,8 @@ import {BackHandler, Button, ToastAndroid, View} from 'react-native';
 import Input from '../../components/TextInput/TextInput';
 import {Colors} from '../../consts';
 import IconButton from '../../ui/IconButton';
-import Padding from '../../ui/Padding';
 import {RealmContext, Task} from '../../realm';
 import {DatePicker} from '../../components/DatePicker';
-import {Typography} from '../../ui';
-import moment, {calendarFormat} from 'moment';
 import Alarm from '../../components/Alarms/Alarms';
 import {NativeModules} from 'react-native';
 import PageHeader from '../../components/PageHeader';
@@ -109,7 +106,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
     });
   };
   const saveProgress = () => {
-    if (description?.length && title?.length) {
+    if (title?.length) {
       switch (formMode) {
         case FormModes.CREATE:
           createTask();
@@ -223,7 +220,6 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
           bottom: 0,
           left: 0,
           right: 0,
-          // height: 60,
         }}>
         <Button
           title="Save"
