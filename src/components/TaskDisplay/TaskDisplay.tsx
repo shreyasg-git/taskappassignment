@@ -1,6 +1,6 @@
 import CheckBox from '@react-native-community/checkbox';
 import React, {useState} from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, Text} from 'react-native';
 import {Colors} from '../../consts';
 import {RealmContext, Task} from '../../realm';
 import Typography from '../../ui/typography/Typography';
@@ -105,11 +105,22 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
             // margin: 2,
           }}>
           {task.title ? (
-            <Typography typography="H5Bold" textAlign="left">
+            <Text
+              style={{
+                // height: 55,
+                // flex: 1,
+                padding: 0,
+                verticalAlign: 'middle',
+                // backgroundColor: Colors.background,
+                borderRadius: 0,
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: Colors.dark,
+              }}>
               {task.title}
-            </Typography>
+            </Text>
           ) : null}
-          <Padding height={15} />
+          <Padding height={8} />
           <Typography
             typography="H5RegularDarkGrey"
             numberOfLines={1}
