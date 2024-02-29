@@ -9,6 +9,7 @@ export class Task extends Realm.Object<Task> {
   due_date!: 'date';
   description?: 'string';
   completed!: 'bool';
+  remind_me?: 'bool';
 
   static schema: ObjectSchema = {
     name: 'Task',
@@ -18,6 +19,7 @@ export class Task extends Realm.Object<Task> {
       due_date: {type: 'date'},
       description: {type: 'string'},
       completed: {type: 'bool', default: () => false},
+      remind_me: {type: 'bool', default: () => true},
     },
     primaryKey: '_id',
   };

@@ -11,9 +11,13 @@ import {RealmContext, Task} from '../../realm';
 import {DatePicker} from '../../components/DatePicker';
 import {Typography} from '../../ui';
 import moment, {calendarFormat} from 'moment';
+import Alarm from '../../components/Alarms/Alarms';
+import {NativeModules} from 'react-native';
 export const FormModes = {CREATE: 'CREATE', EDIT: 'EDIT'};
 
 const {useRealm, useObject} = RealmContext;
+const {AlarmModule} = NativeModules;
+
 type TaskFormPageProps = {};
 
 const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
@@ -40,6 +44,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
   const [description, setDesc] = useState(task?.description || '');
   const [softDate, setSoftDate] = useState(task?.due_date || new Date());
   const [height, setHeight] = useState<number>(0);
+  const [setAlarm, setSetAlarm] = useState(false);
 
   const setDueDate = (date: any) => {
     console.log('SET DUE DATE ::', date);
@@ -67,8 +72,10 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
           description,
           title,
           due_date: softDate,
+          remind_me: setAlarm,
         });
       });
+      AlarmModule.setAlarm(softDate.getTime().toString(), title);
     } catch (error) {
       console.log('ERROR IN CREAT Task', error);
     }
@@ -128,6 +135,12 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
           saveProgress();
         }}
       />
+      <Alarm
+        value={setAlarm}
+        setValue={setSetAlarm}
+        disabled={formMode === FormModes.EDIT}
+      />
+      {console.log('AAAAAAAAAAAAA', formMode)}
       <View
         style={{
           display: 'flex',
