@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Realm from 'realm';
-import {FlatList, TouchableOpacity, View} from 'react-native';
+import {Button, FlatList, TouchableOpacity, View} from 'react-native';
 import {Colors} from '../consts';
 import {RealmContext, Task} from '../realm';
 import Typography from '../ui/typography/Typography';
@@ -45,6 +45,12 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
   //   });
   // };
 
+  const deleteAllTasks = () => {
+    realm.write(() => {
+      realm.delete(tasks);
+    });
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: Colors.background}}>
       <View
@@ -80,12 +86,42 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
         keyExtractor={props => {
           return props._id.toString();
         }}
+        ListEmptyComponent={() => {
+          return (
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: 10,
+                marginTop: 50,
+              }}>
+              <Typography typography="H4Bold">No Tasks To Show</Typography>
+              <Typography typography="H6BoldDarkGrey">
+                Create tasks by pressing the + button below
+              </Typography>
+            </View>
+          );
+        }}
       />
 
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          // height: 60,
+        }}>
+        <Button
+          title="Delete All Tasks"
+          color={Colors.red}
+          onPress={deleteAllTasks}
+        />
+      </View>
       <FAB
         iconName="plus"
         onPress={() => {
-          console.log('AAAAAAAAAAAAAA NO:OP');
           // @ts-ignore
           navigate('CreateTask', {});
         }}
