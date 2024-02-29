@@ -52,7 +52,7 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
         borderStyle: 'solid',
         justifyContent: 'space-between',
         // flexWrap: 'wrap',
-        margin: 5,
+        margin: 10,
         borderRadius: 5,
         padding: 5,
         flexDirection: 'row',
