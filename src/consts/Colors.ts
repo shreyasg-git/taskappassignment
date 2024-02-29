@@ -25,6 +25,7 @@ export const Colors = {
   // dark: '#000A33',
 
   red: '#FF5E5E',
+  fadedRed: '#ff7373',
 
   green: '#26CBA3',
   darkGreen: '#198B6F',

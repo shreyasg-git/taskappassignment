@@ -35,10 +35,16 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
       });
     }
   };
-  const [isCompleted, setIsCompleted] = useState(false);
   const endOfString =
     task.description && task.description?.length >= CLIP_THRESHOLD ? '...' : '';
+
   const clippedDesc = task.description?.slice(0, CLIP_THRESHOLD) + endOfString;
+
+  const statusColor = task.completed
+    ? Colors.green
+    : task.due_date.getTime() < new Date().getTime()
+    ? Colors.fadedRed
+    : Colors.secondaryYellow;
 
   return (
     <TouchableOpacity
@@ -58,6 +64,16 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
         padding: 5,
         flexDirection: 'row',
       }}>
+      <View
+        style={{
+          // height: '100%',
+          backgroundColor: statusColor,
+          position: 'absolute',
+          width: 7,
+          top: 0,
+          bottom: 0,
+        }}
+      />
       <View style={{flexDirection: 'row'}}>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <CheckBox
@@ -96,7 +112,7 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
           <Padding height={15} />
 
           <Typography
-            typography="H6RegularDarkGrey"
+            typography="H5RegularDarkGrey"
             numberOfLines={1}
             ellipsizeMode="tail">
             {clippedDesc}
@@ -105,10 +121,10 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
       </View>
       <View style={{padding: 1}}>
         <View style={{flex: 1}}>
-          <Typography typography="H7RegularDarkGrey">
+          <Typography typography="H7Bold">
             {moment(task.due_date).calendar()}
           </Typography>
-          <Typography typography="H7RegularDarkGrey">
+          <Typography typography="H7RegularDarkGrey" textAlign="right">
             {moment(task.due_date).fromNow()}
           </Typography>
         </View>
