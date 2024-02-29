@@ -3,6 +3,7 @@ export const Colors = {
   dark: '#252525',
   darkNavyBlue: '#000A33',
   background: '#FFFAEB',
+  backgroundElevate: '#fcf1cf',
   // =========================
 
   blue: '#2C49C7',

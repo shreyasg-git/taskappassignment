@@ -3,7 +3,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {HomePage} from './src/pages';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {TaskFormPage} from './src/pages/TaskFormPage';
-import {RealmContext} from './src/realm';
+import {RealmContext, Task} from './src/realm';
+import Icon from './src/ui/Icon';
+import IconButton from './src/ui/IconButton';
 
 const {RealmProvider} = RealmContext;
 
@@ -11,13 +13,20 @@ const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
   return (
-    <RealmProvider>
+    <RealmProvider schema={[Task]}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
             name="Home"
             component={HomePage}
-            options={{title: 'Tasks'}}
+            options={{
+              title: 'Tasks',
+              // headerRight: () => {
+              //   return (
+              //     <IconButton icon="chevron-down" iconColor="#000" onPress={} />
+              //   );
+              // },
+            }}
           />
           <Stack.Screen
             name="CreateTask"

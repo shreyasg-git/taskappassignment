@@ -2,14 +2,17 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 // import {useRealm} from '@realm/react';
 import Realm from 'realm';
 import React, {useEffect, useMemo, useState} from 'react';
-import {BackHandler, View} from 'react-native';
+import {BackHandler, Button, View} from 'react-native';
 import Input from '../../components/TextInput/TextInput';
 import {Colors} from '../../consts';
 import IconButton from '../../ui/IconButton';
 import Padding from '../../ui/Padding';
 import {RealmContext, Task} from '../../realm';
 import {DatePicker} from '../../components/DatePicker';
+import {Typography} from '../../ui';
+import moment, {calendarFormat} from 'moment';
 export const FormModes = {CREATE: 'CREATE', EDIT: 'EDIT'};
+import DropDown from '../../components/Dropdown';
 
 const {useRealm, useObject} = RealmContext;
 type TaskFormPageProps = {};
@@ -19,6 +22,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
   const {params, name} = useRoute();
 
   const realm = useRealm();
+
   const task = useMemo(() => {
     if (params?.taskId) {
       const record = realm.objectForPrimaryKey(Task, params?.taskId);
@@ -28,11 +32,26 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
     }
   }, [params]);
 
+  let _task: any;
+  if (params?.taskId) {
+    _task = useObject(Task, params?.taskId);
+  }
+
   const [title, setTitle] = useState(task?.title || '');
   const [description, setDesc] = useState(task?.description || '');
-  const [dueDate, setDueDate] = useState(new Date());
-
+  const [softDate, setSoftDate] = useState(new Date());
   const [height, setHeight] = useState<number>(0);
+
+  const setDueDate = (date: any) => {
+    console.log('SET DUE DATE ::', date);
+    setSoftDate(date);
+
+    if (_task) {
+      realm.write(() => {
+        _task.due_date = date;
+      });
+    }
+  };
 
   const formMode = useMemo(() => {
     if (name === 'EditTask') {
@@ -48,7 +67,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
           _id: new Realm.BSON.ObjectId(),
           description,
           title,
-          due_date: dueDate,
+          due_date: softDate,
         });
       });
     } catch (error) {
@@ -56,13 +75,15 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
     }
   };
 
+  // saves the soft state
   const editTask = () => {
     realm.write(() => {
       if (task) {
-        console.log('TaskForm:editTask :: ', description, title);
+        console.log('TaskForm:editTask :: ', description, title, softDate);
 
         task.description = description as 'string';
         task.title = title as 'string';
+        task.due_date = softDate as any;
         // task.updatedAt = new Date().toISOString() as 'date';
       }
     });
@@ -102,14 +123,34 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
       }}>
       <IconButton
         icon="chevron-left"
+        iconColor="#000"
         onPress={() => {
           goBack();
           onBackPress();
         }}
       />
-      <DatePicker />
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <Typography typography="H6Bold">Due Date : </Typography>
+          <Typography typography="H6Regular">
+            {moment(softDate).calendar()}
+          </Typography>
+        </View>
+        <DatePicker date={softDate} setDate={setDueDate} />
+      </View>
       <Padding height={20} />
-
       <Input
         placeholder="Title"
         style={{
@@ -122,7 +163,7 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
           fontSize: 28,
         }}
         selectionColor={Colors.dark}
-        placeholderTextColor={Colors.dark}
+        placeholderTextColor={Colors.darkGrey}
         value={title}
         onChangeText={text => {
           setTitle(text);
@@ -149,6 +190,16 @@ const TaskFormPage: React.FC<TaskFormPageProps> = ({}) => {
           setDesc(text);
         }}
       />
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          // height: 60,
+        }}>
+        <Button title="Save" color={Colors.darkNavyBlue} />
+      </View>
     </View>
   );
 };

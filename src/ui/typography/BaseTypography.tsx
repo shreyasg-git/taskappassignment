@@ -49,7 +49,7 @@ const BaseTypography: React.FC<BaseTypographyProps> = ({
 };
 
 const styles = StyleSheet.create({
-  text: {},
+  text: {overflow: 'hidden'},
 });
 
 export default BaseTypography;

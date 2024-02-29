@@ -1,20 +1,43 @@
 import CheckBox from '@react-native-community/checkbox';
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {Colors, DateFormats} from '../../consts';
-import {Task} from '../../realm';
+import {View, TouchableOpacity} from 'react-native';
+import {Colors} from '../../consts';
+import {RealmContext, Task} from '../../realm';
 import Typography from '../../ui/typography/Typography';
 import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
-import DatePicker from '../DatePicker/DatePicker';
+import IconButton from '../../ui/IconButton';
+import Padding from '../../ui/Padding';
+
+const {useObject, useRealm} = RealmContext;
+
+const CLIP_THRESHOLD = 30;
 
 type TaskDisplayProps = {task: Task};
 
 const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
   const {navigate} = useNavigation();
+  const realm = useRealm();
+  const _task = useObject(Task, task._id);
 
-  const onCheckBoxClick = () => {};
+  // const realm = useRealm();
+  const deleteTask = (task: Task) => {
+    realm.write(() => {
+      realm.delete(task);
+    });
+  };
+
+  const onCheckBoxClick = (newValue: any) => {
+    if (_task) {
+      realm.write(() => {
+        _task.completed = newValue;
+      });
+    }
+  };
   const [isCompleted, setIsCompleted] = useState(false);
+  const endOfString =
+    task.description && task.description?.length >= CLIP_THRESHOLD ? '...' : '';
+  const clippedDesc = task.description?.slice(0, CLIP_THRESHOLD) + endOfString;
 
   return (
     <TouchableOpacity
@@ -27,18 +50,30 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
         borderColor: Colors.grey,
         borderStyle: 'solid',
         justifyContent: 'space-between',
+        // flexWrap: 'wrap',
         margin: 5,
         borderRadius: 5,
         padding: 5,
         flexDirection: 'row',
       }}>
       <View style={{flexDirection: 'row'}}>
-        <View>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <CheckBox
             disabled={false}
-            value={isCompleted}
-            onValueChange={newValue => setIsCompleted(!isCompleted)}
+            value={task?.completed}
+            onValueChange={newValue => {
+              console.log('CHECK BOX:: NEW VALUE', newValue);
+              onCheckBoxClick(newValue);
+            }}
             lineWidth={1}
+          />
+          <IconButton
+            onPress={() => {
+              console.log('DELETE TASK::NO OP');
+              deleteTask(task);
+            }}
+            icon="delete"
+            iconColor="#FF0000"
           />
         </View>
         <View
@@ -46,24 +81,30 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
+            padding: 2,
+            overflow: 'hidden',
+            // margin: 2,
           }}>
           {task.title ? (
             <Typography typography="H5Bold" textAlign="left">
               {task.title}
             </Typography>
           ) : null}
+          <Padding height={15} />
 
-          <Typography typography="H6RegularDarkGrey">
-            {task.description}
+          <Typography
+            typography="H6RegularDarkGrey"
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {clippedDesc}
           </Typography>
         </View>
       </View>
-      <View>
-        <View>
+      <View style={{padding: 1}}>
+        <View style={{flex: 1, overflow: 'visible'}}>
           <Typography typography="H7RegularDarkGrey">
             {moment(task.due_date).calendar()}
-            {/* {moment(task.due_date).format(DateFormats.DayMonthYearNoDashes)},{' '} */}
           </Typography>
           <Typography typography="H7RegularDarkGrey">
             {moment(task.due_date).fromNow()}
