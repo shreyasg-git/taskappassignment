@@ -28,7 +28,11 @@ const Alarm: React.FC<AlarmProps> = ({value, setValue, disabled}) => {
           setValue(newVal);
         }}
       />
-      <Typography typography="H6Bold">Remind Me</Typography>
+      {disabled ? (
+        <Typography typography="H6BoldDarkGrey">Remind Me</Typography>
+      ) : (
+        <Typography typography="H6Bold">Remind Me</Typography>
+      )}
     </View>
   );
 };

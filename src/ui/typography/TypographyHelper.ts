@@ -176,6 +176,7 @@ export const TypographyHelper = {
   },
   H5Bold: {
     fontSize: typographySizes.h5,
+    fontWeight: '600',
     fontFamily: typographyFamilies.poppinsBold,
   },
   H5RegularBlue: {

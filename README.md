@@ -1,7 +1,5 @@
-schema -
-Task
-Boolean - completed
-String - Task Title
-Date - Due Date
+<!-- validation -->
+<!-- form ko thik kro -->
 
-psuedo-delete?
+if the task due date passed - red
+if task completed - fade

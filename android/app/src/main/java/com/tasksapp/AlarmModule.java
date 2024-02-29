@@ -43,7 +43,7 @@ public class AlarmModule extends ReactContextBaseJavaModule {
       getReactApplicationContext(),
       0,
       intent,
-      PendingIntent.FLAG_UPDATE_CURRENT
+      PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
     );
     alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
   }
@@ -71,7 +71,7 @@ public class AlarmModule extends ReactContextBaseJavaModule {
       context,
       0,
       intent,
-      0
+      PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
     );
 
     NotificationCompat.Builder builder = new NotificationCompat.Builder(

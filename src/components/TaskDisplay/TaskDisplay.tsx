@@ -1,6 +1,6 @@
 import CheckBox from '@react-native-community/checkbox';
 import React, {useState} from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, Text} from 'react-native';
 import {Colors} from '../../consts';
 import {RealmContext, Task} from '../../realm';
 import Typography from '../../ui/typography/Typography';
@@ -35,10 +35,16 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
       });
     }
   };
-  const [isCompleted, setIsCompleted] = useState(false);
   const endOfString =
     task.description && task.description?.length >= CLIP_THRESHOLD ? '...' : '';
+
   const clippedDesc = task.description?.slice(0, CLIP_THRESHOLD) + endOfString;
+
+  const statusColor = task.completed
+    ? Colors.green
+    : task.due_date.getTime() < new Date().getTime()
+    ? Colors.fadedRed
+    : Colors.secondaryYellow;
 
   return (
     <TouchableOpacity
@@ -58,6 +64,16 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
         padding: 5,
         flexDirection: 'row',
       }}>
+      <View
+        style={{
+          // height: '100%',
+          backgroundColor: statusColor,
+          position: 'absolute',
+          width: 7,
+          top: 0,
+          bottom: 0,
+        }}
+      />
       <View style={{flexDirection: 'row'}}>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <CheckBox
@@ -89,14 +105,24 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
             // margin: 2,
           }}>
           {task.title ? (
-            <Typography typography="H5Bold" textAlign="left">
+            <Text
+              style={{
+                // height: 55,
+                // flex: 1,
+                padding: 0,
+                verticalAlign: 'middle',
+                // backgroundColor: Colors.background,
+                borderRadius: 0,
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: Colors.dark,
+              }}>
               {task.title}
-            </Typography>
+            </Text>
           ) : null}
-          <Padding height={15} />
-
+          <Padding height={8} />
           <Typography
-            typography="H6RegularDarkGrey"
+            typography="H5RegularDarkGrey"
             numberOfLines={1}
             ellipsizeMode="tail">
             {clippedDesc}
@@ -105,11 +131,11 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({task}) => {
       </View>
       <View style={{padding: 1}}>
         <View style={{flex: 1}}>
-          <Typography typography="H7RegularDarkGrey">
-            {moment(task.due_date).calendar()}
+          <Typography typography="H7Bold">
+            {moment(_task?.due_date).calendar()}
           </Typography>
-          <Typography typography="H7RegularDarkGrey">
-            {moment(task.due_date).fromNow()}
+          <Typography typography="H7RegularDarkGrey" textAlign="right">
+            {moment(_task?.due_date).fromNow()}
           </Typography>
         </View>
         {task.remind_me ? (
